@@ -1,8 +1,9 @@
+require("dotenv").config();
 const express = require("express");
 
 const app = express();
 
-const PORT = 5050;
+const PORT = process.env.SERVER_PORT;
 
 app.get("/api/test", async (req, res) => {
   return res.json({
