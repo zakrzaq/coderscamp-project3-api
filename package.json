@@ -24,9 +24,7 @@
   "homepage": "https://github.com/zakrzaq/coderscamp_2021_backend#readme",
   "dependencies": {
     "dotenv": "^16.0.0",
-    "dotenv-flow": "^3.2.0",
     "express": "^4.17.3",
-    "mongoose": "^6.2.2",
     "nodemon": "^2.0.15"
   }
 }
