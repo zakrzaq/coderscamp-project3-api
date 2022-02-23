@@ -24,6 +24,10 @@
   "dependencies": {
     "dotenv": "^16.0.0",
     "express": "^4.17.3",
+<<<<<<< HEAD
+=======
+    "mongoose": "^6.2.3",
+>>>>>>> 57b71ddc57699ec842159b7b2b695ad9b25cf124
     "nodemon": "^2.0.15"
   }
 }
