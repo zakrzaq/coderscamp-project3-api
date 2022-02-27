@@ -1,0 +1,14 @@
+<%- include("header") -%>
+
+ <h1><%= sectionTitle %></h1>
+
+ <%  restaurantsChains.forEach(function(restaurant){ %>
+
+      <div>
+          <p><%=restaurant.name%></p>
+          <p><%=restaurant.manager%></p>
+      </div>
+
+  <%  }) %>
+
+<%- include("footer") -%>
