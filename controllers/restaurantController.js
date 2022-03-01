@@ -41,7 +41,7 @@ const getRestaurantById = async function (req, res) {
 const deleteRestaurantById = async function (req, res) {
   try {
     await Restaurant.findByIdAndDelete(req.params.id);
-    res.status(200).end();
+    res.end();
   } catch (error) {
     res.status(400).send(error);
   }
@@ -68,10 +68,10 @@ const updateRestaurantById = async function (req, res) {
 
 const getRestaurantsByRestaurantChainId = async function (req, res) {
   try {
-    const docs = await Restaurant.find({
+    const restaurantsInChain = await Restaurant.find({
       restaurantChain: req.params.id,
-    }).exec();
-    res.send(docs);
+    });
+    res.send(restaurantsInChain);
   } catch (error) {
     res.status(400).send(error);
   }
