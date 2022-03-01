@@ -1,9 +1,11 @@
 import { Restaurant } from "../models/Restaurant.js";
 import mongoose from "mongoose";
 
-const getAllRestaurants = async function (req, res) {
+const getRestaurants = async function (req, res) {
   try {
-    const restaurants = await Restaurant.find();
+    const queryObj = { ...req.query };
+    let query = Restaurant.find(queryObj);
+    const restaurants = await query;
     res.send(restaurants);
   } catch (error) {
     res.status(400).send(error);
@@ -64,23 +66,6 @@ const updateRestaurantById = async function (req, res) {
   }
 };
 
-const getRestaurantByQuery = async function (req, res) {
-  const name = req.query.name || "";
-  const city = req.query.city || "";
-  let query = {
-    $or: [{ "address.city": city }, { name: name }],
-  };
-
-  try {
-    const restaurants = await Restaurant.find(query)
-      .populate("restaurantChain", "name")
-      .exec();
-    res.send(restaurants);
-  } catch (error) {
-    res.status(400).send(error);
-  }
-};
-
 const getRestaurantsByRestaurantChainId = async function (req, res) {
   try {
     const docs = await Restaurant.find({
@@ -93,11 +78,10 @@ const getRestaurantsByRestaurantChainId = async function (req, res) {
 };
 
 export const restaurantController = {
-  getAllRestaurants,
+  getRestaurants,
   addRestaurant,
   getRestaurantById,
   deleteRestaurantById,
   updateRestaurantById,
-  getRestaurantByQuery,
   getRestaurantsByRestaurantChainId,
 };
