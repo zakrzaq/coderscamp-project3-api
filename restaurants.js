@@ -61,41 +61,23 @@ app.get('/restaurantChains/:chainId', function (req, res) {
   });
 });
 
-app
-  .route('/restaurantChains/edit/:chainId')
-
-  .get(function (req, res) {
-    RestaurantsChain.findById(req.params.chainId, function (err, chain) {
+app.post('/restaurantChains/edit/:chainId', function (req, res) {
+  RestaurantsChain.findByIdAndUpdate(
+    req.params.chainId,
+    {
+      id: req.body.id,
+      name: req.body.name,
+      manager: req.body.manager,
+    },
+    function (err) {
       if (!err) {
-        res.render('edit', {
-          sectionTitle: 'Edit chain',
-          id: chain._id,
-          name: chain.name,
-          manager: chain.manager,
-        });
+        res.redirect(`/restaurantChains/${req.params.chainId}`);
       } else {
         res.render(err);
       }
-    });
-  })
-
-  .post(function (req, res) {
-    RestaurantsChain.findByIdAndUpdate(
-      req.params.chainId,
-      {
-        id: req.body.id,
-        name: req.body.name,
-        manager: req.body.manager,
-      },
-      function (err) {
-        if (!err) {
-          res.redirect(`/restaurantChains/${req.params.chainId}`);
-        } else {
-          res.render(err);
-        }
-      },
-    );
-  });
+    },
+  );
+});
 
 app.get('/restaurantChains/delete/:chainId', function (req, res) {
   RestaurantsChain.findByIdAndDelete(req.params.chainId, function (err) {
