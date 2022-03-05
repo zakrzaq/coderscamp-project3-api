@@ -79,23 +79,24 @@ app
     });
   })
 
-  .put(function (req, res) {
-    console.log(req.params.chainId);
+  .post(function (req, res) {
     RestaurantsChain.findByIdAndUpdate(
       req.params.chainId,
       {
+        id: req.body.id,
         name: req.body.name,
         manager: req.body.manager,
       },
       function (err) {
         if (!err) {
-          res.redirect('/restaurantChains/:chainId');
+          res.redirect(`/restaurantChains/${req.params.chainId}`);
         } else {
           res.render(err);
         }
       },
     );
   });
+
 app.get('/restaurantChains/delete/:chainId', function (req, res) {
   RestaurantsChain.findByIdAndDelete(req.params.chainId, function (err) {
     if (!err) {

@@ -9,7 +9,7 @@
 
 <hr />
 
-<form method="PUT" action="/restaurantChains/edit/<%=id%>">
+<form method="POST" action="/restaurantChains/edit/<%=id%>">
   <div>
     <label for="chain"><strong>Chain:</strong> </label>
     <input type="text" name="name" value="<%=name%>" />
@@ -21,7 +21,6 @@
 
   <br />
 
-  <!-- <input type="hidden" name="_method" value="PUT" /> -->
   <button type="submit">Edit</button>
 </form>
 
