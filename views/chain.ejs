@@ -1,0 +1,22 @@
+<%- include("header") -%>
+
+<h1>Chain: <%=name%></h1>
+
+<div>
+  <p><strong>Chain:</strong> <%=name%></p>
+  <p><strong>Manager:</strong> <%=manager%></p>
+</div>
+
+<hr />
+
+<a href="/restaurantChains/edit/<%=id%>">edit</a>
+
+<br />
+
+<a href="/restaurantChains/delete/<%=id%>">delete</a>
+
+<br />
+
+<a href="/restaurantChains">back</a>
+
+<%- include("footer") -%>

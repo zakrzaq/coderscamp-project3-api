@@ -1,14 +1,23 @@
 <%- include("header") -%>
 
- <h1><%= sectionTitle %></h1>
+<h1><%= sectionTitle %></h1>
 
- <%  restaurantsChains.forEach(function(restaurant){ %>
+<form method="post" action="/restaurantChains">
+  <input type="text" name="name" placeholder="Restaurant chain" />
+  <input type="text" name="manager" placeholder="Manager" />
+  <button type="submit">Add</button>
+</form>
 
-      <div>
-          <p><%=restaurant.name%></p>
-          <p><%=restaurant.manager%></p>
-      </div>
+<hr />
+<% restaurantsChains.forEach(function(restaurant){ %>
 
-  <%  }) %>
+<div>
+  <p><strong>Restaurant chain:</strong> <%=restaurant.name%></p>
+  <p><strong>Manager:</strong> <%=restaurant.manager%></p>
 
-<%- include("footer") -%>
+  <a href="/restaurantChains/<%=restaurant._id%>">See more</a>
+</div>
+
+<hr />
+
+<% }) %> <%- include("footer") -%>
