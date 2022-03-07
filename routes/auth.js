@@ -34,7 +34,7 @@ router.post("/register", async (req, res) => {
     }
 });
 
-let refreshTokens = [];
+const refreshTokens = [];
 
 router.post("/login", async (req, res) => {
     const { error } = loginValidation(req.body);
@@ -87,7 +87,7 @@ router.post("/logout", (req, res) => {
 
     refreshTokens = refreshTokens.filter((t) => t !== token);
 
-    res.send("Logout successful");
+    res.status(204).send("Logout successful");
 });
 
 export { router };
