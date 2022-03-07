@@ -3,6 +3,8 @@ import connectDB from "./db/mongoose.js";
 import { testRouter } from "./routes/testRouter.js";
 import { router as authRoute } from "./routes/auth.js";
 import { verify } from "./routes/verifyToken.js";
+import { roles } from "./routes/roles.js";
+import { setUser, authRole } from "./routes/rolesAuth.js";
 
 const app = express();
 
@@ -21,10 +23,13 @@ app.use("/api/dashboard", verify, (req, res) => {
 });
 
 // example of verification of the owner
-app.use("/api/owner", verify, (req, res) => {
+app.use("/api/owner", verify, setUser, authRole(roles.OWNER), (req, res) => {
     res.send("owner access");
 });
 
 // example of verification of the admin
+app.use("/api/admin", verify, setUser, authRole(roles.ADMIN), (req, res) => {
+    res.send("admin axcess");
+});
 
 app.listen(PORT, () => console.log(`Server is running on: ${PORT}`));
