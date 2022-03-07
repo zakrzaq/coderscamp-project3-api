@@ -1,4 +1,5 @@
 import { Restaurant } from "../models/Restaurant.js";
+import { httpStatus } from "../utils/httpStatusCode.js";
 import mongoose from "mongoose";
 
 const getRestaurants = async function (req, res) {
@@ -8,18 +9,17 @@ const getRestaurants = async function (req, res) {
     const restaurants = await query;
 
     if (restaurants.length === 0) {
-      return res.status(404).json({
-        success: false,
-        error: "No restaurant found",
+      return res.status(httpStatus.NO_CONTENT).json({
+        message: "No restaurant found",
       });
     }
 
-    return res.status(200).json({
+    return res.status(httpStatus.OK).json({
       success: true,
       data: restaurants,
     });
   } catch (err) {
-    return res.status(500).json({
+    return res.status(httpStatus.INTERNAL_SERVER_ERROR).json({
       success: false,
       error: "Server Error",
     });
@@ -38,24 +38,15 @@ const addRestaurant = async function (req, res) {
   try {
     const restaurant = await Restaurant.create(restaurantToAdd);
 
-    return res.status(201).json({
+    return res.status(httpStatus.CREATED).json({
       success: true,
       data: restaurant,
     });
   } catch (err) {
-    if (err.name === "ValidationError") {
-      const messages = Object.values(err.errors).map((val) => val.message);
-
-      return res.status(400).json({
-        success: false,
-        error: messages,
-      });
-    } else {
-      return res.status(500).json({
-        success: false,
-        error: "Server Error",
-      });
-    }
+    return res.status(httpStatus.INTERNAL_SERVER_ERROR).json({
+      success: false,
+      error: "Server Error",
+    });
   }
 };
 
@@ -64,17 +55,16 @@ const getRestaurantById = async function (req, res) {
     const restaurant = await Restaurant.findById(req.params.id);
 
     if (!restaurant) {
-      return res.status(404).json({
-        success: false,
-        error: "No restaurant found",
+      return res.status(httpStatus.NO_CONTENT).json({
+        message: "id not found.",
       });
     }
-    return res.status(200).json({
+    return res.status(httpStatus.OK).json({
       success: true,
       data: { restaurant },
     });
   } catch (err) {
-    return res.status(500).json({
+    return res.status(httpStatus.INTERNAL_SERVER_ERROR).json({
       success: false,
       error: "Server error",
     });
@@ -86,19 +76,18 @@ const deleteRestaurantById = async function (req, res) {
     const restaurant = await Restaurant.findById(req.params.id);
 
     if (!restaurant) {
-      return res.status(404).json({
-        success: false,
-        error: "No restaurant found",
+      return res.status(httpStatus.NO_CONTENT).json({
+        message: "No restaurant found",
       });
     }
     await restaurant.remove();
 
-    return res.status(200).json({
+    return res.status(httpStatus.NO_CONTENT).json({
       success: true,
       data: {},
     });
   } catch (err) {
-    return res.status(500).json({
+    return res.status(httpStatus.INTERNAL_SERVER_ERROR).json({
       success: false,
       error: "Server error",
     });
@@ -118,12 +107,12 @@ const updateRestaurantById = async function (req, res) {
       restaurantToUpdate
     );
     updatedRestaurant.save();
-    return res.status(200).json({
+    return res.status(httpStatus.OK).json({
       success: true,
       data: { updatedRestaurant },
     });
   } catch (error) {
-    return res.status(500).json({
+    return res.status(httpStatus.INTERNAL_SERVER_ERROR).json({
       success: false,
       error: "Server error",
     });
@@ -137,18 +126,17 @@ const getRestaurantsByRestaurantChainId = async function (req, res) {
     });
 
     if (restaurantsInChain.length === 0) {
-      return res.status(404).json({
-        success: false,
-        error: "No restaurant found",
+      return res.status(httpStatus.NO_CONTENT).json({
+        message: "No restaurant chain found",
       });
     }
 
-    return res.status(200).json({
+    return res.status(httpStatus.OK).json({
       success: true,
       data: { restaurantsInChain },
     });
   } catch (error) {
-    return res.status(500).json({
+    return res.status(httpStatus.INTERNAL_SERVER_ERROR).json({
       success: false,
       error: "Server error",
     });
