@@ -1,12 +1,15 @@
 import express from "express";
 import connectDB from "./db/mongoose.js";
 import { testRouter } from "./routes/testRouter.js";
+import dotenv from 'dotenv'
+
+dotenv.config();
 
 const app = express();
 
 const PORT = process.env.SERVER_PORT;
 
-connectDB();
+// connectDB();
 
 app.use(express.json());
 
