@@ -9,9 +9,12 @@ app.set('view engine', 'ejs');
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static('public'));
 
-mongoose.connect('mongodb://localhost:27017/restaurants-db', {
-  useNewUrlParser: true,
-});
+mongoose.connect(
+  'mongodb+srv://coderscamp:PLsf9STRabDa3zTm@cluster0.p1mqc.mongodb.net/myFirstDatabase?retryWrites=true&w=majority',
+  {
+    useNewUrlParser: true,
+  },
+);
 
 const restaurantSchema = new mongoose.Schema({
   name: String,
