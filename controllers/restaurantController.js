@@ -1,12 +1,9 @@
-import { Restaurant } from "../models/Restaurant.js";
 import { httpStatus } from "../utils/httpStatusCode.js";
-import mongoose from "mongoose";
+import { restaurantService } from "../services/restaurantService.js";
 
 const getRestaurants = async function (req, res) {
   try {
-    const queryObj = { ...req.query };
-    let query = Restaurant.find(queryObj);
-    const restaurants = await query;
+    const restaurants = await restaurantService.getRestaurants(req.query);
 
     if (restaurants.length === 0) {
       return res.status(httpStatus.NO_CONTENT).json({
@@ -27,16 +24,8 @@ const getRestaurants = async function (req, res) {
 };
 
 const addRestaurant = async function (req, res) {
-  const restaurantToAdd = new Restaurant({
-    _id: new mongoose.Types.ObjectId(),
-    name: req.body.name,
-    address: req.body.address,
-    phone: req.body.phone,
-    restaurantChain: req.body.restaurantChain,
-  });
-
   try {
-    const restaurant = await Restaurant.create(restaurantToAdd);
+    const restaurant = await restaurantService.addRestaurant(req.body);
 
     return res.status(httpStatus.CREATED).json({
       success: true,
@@ -52,8 +41,7 @@ const addRestaurant = async function (req, res) {
 
 const getRestaurantById = async function (req, res) {
   try {
-    const restaurant = await Restaurant.findById(req.params.id);
-
+    const restaurant = await restaurantService.getRestaurantById(req.params);
     if (!restaurant) {
       return res.status(httpStatus.NO_CONTENT).json({
         message: "id not found.",
@@ -73,14 +61,7 @@ const getRestaurantById = async function (req, res) {
 
 const deleteRestaurantById = async function (req, res) {
   try {
-    const restaurant = await Restaurant.findById(req.params.id);
-
-    if (!restaurant) {
-      return res.status(httpStatus.NO_CONTENT).json({
-        message: "No restaurant found",
-      });
-    }
-    await restaurant.remove();
+    await restaurantService.deleteRestaurantById(req.params);
 
     return res.status(httpStatus.NO_CONTENT).json({
       success: true,
@@ -95,18 +76,11 @@ const deleteRestaurantById = async function (req, res) {
 };
 
 const updateRestaurantById = async function (req, res) {
-  const restaurantToUpdate = {
-    name: req.body.name,
-    address: req.body.address,
-    phone: req.body.phone,
-    restaurantChain: req.body.restaurantChain,
-  };
   try {
-    const updatedRestaurant = await Restaurant.findByIdAndUpdate(
-      req.params.id,
-      restaurantToUpdate
+    const updatedRestaurant = await restaurantService.updateRestaurantById(
+      req.params,
+      req.body
     );
-    updatedRestaurant.save();
     return res.status(httpStatus.OK).json({
       success: true,
       data: { updatedRestaurant },
@@ -121,9 +95,8 @@ const updateRestaurantById = async function (req, res) {
 
 const getRestaurantsByRestaurantChainId = async function (req, res) {
   try {
-    const restaurantsInChain = await Restaurant.find({
-      restaurantChain: req.params.id,
-    });
+    const restaurantsInChain =
+      await restaurantService.getRestaurantsByRestaurantChainId(req.params);
 
     if (restaurantsInChain.length === 0) {
       return res.status(httpStatus.NO_CONTENT).json({

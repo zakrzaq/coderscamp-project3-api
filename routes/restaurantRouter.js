@@ -21,7 +21,6 @@ restaurantRouter
     validateRestaurant,
     restaurantController.updateRestaurantById
   )
-
   .get(
     "/restaurantChain/:id",
     restaurantController.getRestaurantsByRestaurantChainId
