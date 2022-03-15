@@ -5,8 +5,11 @@ import { router as authRoute } from "./routes/auth.js";
 import { verify } from "./routes/verifyToken.js";
 import { roles } from "./routes/roles.js";
 import { setUser, authRole } from "./routes/rolesAuth.js";
+import { restaurantRouter } from "./routes/restaurantRouter.js";
+import morgan from "morgan";
 
 const app = express();
+app.use(morgan("dev"));
 
 const PORT = process.env.SERVER_PORT;
 
@@ -31,5 +34,6 @@ app.use("/api/owner", verify, setUser, authRole(roles.OWNER), (req, res) => {
 app.use("/api/admin", verify, setUser, authRole(roles.ADMIN), (req, res) => {
     res.send("admin axcess");
 });
+app.use("/restaurant", restaurantRouter);
 
 app.listen(PORT, () => console.log(`Server is running on: ${PORT}`));
