@@ -5,7 +5,7 @@ export const validateRestaurant = (req, res, next) => {
   const schema = Joi.object({
     name: Joi.string().min(2).max(45).required(),
     phone: Joi.number().required(),
-    restaurantChainId: Joi.string(),
+    restaurantChain: Joi.string(),
     address: Joi.object({
       street: Joi.string().required(),
       number: Joi.number().required(),
