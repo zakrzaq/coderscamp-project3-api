@@ -1,8 +1,13 @@
-import { Table } from '../models/Table';
+import { Table } from '../models/Table.js';
 import mongoose from "mongoose";
 
 const getTables = async (req, res) => {
-
+  try {
+    const tables = await Table.find();
+    res.json(tables);
+  } catch(error) {
+    res.send(error);
+  }
 }
 
 const addTable = async (req, res) => {
@@ -10,7 +15,7 @@ const addTable = async (req, res) => {
     id: new mongoose.Types.ObjectId,
     name: req.body.name,
     numberOfSeats: req.body.numberOfSeats,
-    withChild: req.bodu.withChild,
+    withChild: req.body.withChild,
   });
 
   try {
@@ -22,15 +27,37 @@ const addTable = async (req, res) => {
 }
 
 const getTable = async (req, res) => {
-
+  try {
+    const table = await Table.findById(req.params.id);
+    res.json(table);
+  } catch(error) {
+    res.send(error);
+  }
 }
 
 const updateTable = async (req, res) => {
-
+  try {
+    const updatedTable = await Table.updateOne(
+      { _id: req.params.id},
+      {
+        name: req.body.name,
+        numberOfSeats: req.body.numberOfSeats,
+        withChild: req.body.withChild
+      }
+    );
+    res.json(updatedTable);
+  } catch (error) {
+    res.json({ message: error });
+  }
 }
 
 const deleteTable = async (req, res) => {
-
+  try {
+    const removedTable = await Table.remove({ _id: req.params.id});
+    res.json(removedTable);
+  } catch (error) {
+    res.json({ message: error });
+  }
 }
 
 export const tableController = {

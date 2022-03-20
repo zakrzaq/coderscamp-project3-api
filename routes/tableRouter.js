@@ -1,12 +1,12 @@
 import express from 'express';
-import { tableController } from '../controllers/tableController';
+import { tableController } from '../controllers/tableController.js';
 
 export const tableRouter = express.Router();
 
 tableRouter
-  .get('/')
-  .post('/')
-  .get('/id')
-  .put('/id')
-  .delete('/id');
+  .get('/', tableController.getTables)
+  .post('/', tableController.addTable)
+  .get('/:id', tableController.getTable)
+  .put('/:id', tableController.updateTable)
+  .delete('/:id', tableController.deleteTable);
 
