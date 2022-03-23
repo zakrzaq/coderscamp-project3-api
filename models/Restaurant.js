@@ -29,11 +29,11 @@ const restaurantSchema = new mongoose.Schema({
   },
   phone: {
     type: Number,
-    required: [true, "Field phonr is requied"],
+    required: [true, "Field phone is requied"],
   },
   restaurantChain: {
     type: Schema.Types.ObjectId,
-    ref: "RestaurantChain",
+    ref: "RestaurantsChains",
   },
 });
 
