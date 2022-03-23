@@ -1,6 +1,7 @@
 import express from "express";
 import connectDB from "./db/mongoose.js";
 import { testRouter } from "./routes/testRouter.js";
+import { tableRouter } from "./routes/tableRouter.js";
 import { router as authRoute } from "./routes/auth.js";
 import { verify } from "./routes/verifyToken.js";
 import { roles } from "./routes/roles.js";
@@ -9,7 +10,7 @@ import { restaurantRouter } from "./routes/restaurantRouter.js";
 import morgan from "morgan";
 
 const app = express();
-app.use(morgan("dev"));
+app.use(morgan('dev'));
 
 const PORT = process.env.SERVER_PORT;
 
@@ -17,7 +18,9 @@ connectDB();
 
 app.use(express.json());
 
+
 app.use("/api", testRouter);
+app.use('/tables', tableRouter);
 app.use("/api/user", authRoute);
 
 // example of verification of the user
