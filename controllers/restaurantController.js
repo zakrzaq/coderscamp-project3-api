@@ -1,5 +1,5 @@
-import { httpStatus } from "../utils/httpStatusCode.js";
-import { restaurantService } from "../services/restaurantService.js";
+import { httpStatus } from '../utils/httpStatusCode.js';
+import { restaurantService } from '../services/restaurantService.js';
 
 const getRestaurants = async function (req, res) {
   try {
@@ -7,7 +7,7 @@ const getRestaurants = async function (req, res) {
 
     if (restaurants.length === 0) {
       return res.status(httpStatus.NO_CONTENT).json({
-        message: "No restaurant found",
+        message: 'No restaurant found',
       });
     }
 
@@ -18,7 +18,7 @@ const getRestaurants = async function (req, res) {
   } catch (err) {
     return res.status(httpStatus.INTERNAL_SERVER_ERROR).json({
       success: false,
-      error: "Server Error",
+      error: 'Server Error',
     });
   }
 };
@@ -34,7 +34,7 @@ const addRestaurant = async function (req, res) {
   } catch (err) {
     return res.status(httpStatus.INTERNAL_SERVER_ERROR).json({
       success: false,
-      error: "Server Error",
+      error: 'Server Error',
     });
   }
 };
@@ -44,7 +44,7 @@ const getRestaurantById = async function (req, res) {
     const restaurant = await restaurantService.getRestaurantById(req.params);
     if (!restaurant) {
       return res.status(httpStatus.NO_CONTENT).json({
-        message: "id not found.",
+        message: 'id not found.',
       });
     }
     return res.status(httpStatus.OK).json({
@@ -54,7 +54,7 @@ const getRestaurantById = async function (req, res) {
   } catch (err) {
     return res.status(httpStatus.INTERNAL_SERVER_ERROR).json({
       success: false,
-      error: "Server error",
+      error: 'Server error',
     });
   }
 };
@@ -70,7 +70,7 @@ const deleteRestaurantById = async function (req, res) {
   } catch (err) {
     return res.status(httpStatus.INTERNAL_SERVER_ERROR).json({
       success: false,
-      error: "Server error",
+      error: 'Server error',
     });
   }
 };
@@ -79,7 +79,7 @@ const updateRestaurantById = async function (req, res) {
   try {
     const updatedRestaurant = await restaurantService.updateRestaurantById(
       req.params,
-      req.body
+      req.body,
     );
     return res.status(httpStatus.OK).json({
       success: true,
@@ -88,7 +88,7 @@ const updateRestaurantById = async function (req, res) {
   } catch (error) {
     return res.status(httpStatus.INTERNAL_SERVER_ERROR).json({
       success: false,
-      error: "Server error",
+      error: 'Server error',
     });
   }
 };
@@ -100,7 +100,7 @@ const getRestaurantsByRestaurantChainId = async function (req, res) {
 
     if (restaurantsInChain.length === 0) {
       return res.status(httpStatus.NO_CONTENT).json({
-        message: "No restaurant chain found",
+        message: 'No restaurant chain found',
       });
     }
 
@@ -111,7 +111,7 @@ const getRestaurantsByRestaurantChainId = async function (req, res) {
   } catch (error) {
     return res.status(httpStatus.INTERNAL_SERVER_ERROR).json({
       success: false,
-      error: "Server error",
+      error: 'Server error',
     });
   }
 };

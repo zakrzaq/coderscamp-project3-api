@@ -1,27 +1,16 @@
 import express, { request } from 'express';
 import bodyParser from 'body-parser';
-import mongoose from 'mongoose';
+import connectDB from './db/mongoose.js';
+import { RestaurantsChain } from './models/RestaurantChain.js';
+import { httpStatus } from './utils/httpStatusCode.js';
 
 const app = express();
 
 app.set('view engine', 'ejs');
-
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static('public'));
 
-mongoose.connect(
-  'mongodb+srv://coderscamp:PLsf9STRabDa3zTm@cluster0.p1mqc.mongodb.net/myFirstDatabase?retryWrites=true&w=majority',
-  {
-    useNewUrlParser: true,
-  },
-);
-
-const restaurantSchema = new mongoose.Schema({
-  name: String,
-  manager: String,
-});
-
-const RestaurantsChain = mongoose.model('RestaurantsChain', restaurantSchema);
+connectDB();
 
 app
   .route('/restaurantChains')
@@ -34,7 +23,10 @@ app
           restaurantsChains: chains,
         });
       } else {
-        res.render(err);
+        return res.status(httpStatus.INTERNAL_SERVER_ERROR).json({
+          success: false,
+          error: 'Server Error',
+        });
       }
     });
   })
@@ -57,9 +49,13 @@ app.get('/restaurantChains/:chainId', function (req, res) {
         id: chain._id,
         name: chain.name,
         manager: chain.manager,
+        restaurants: chain.Restaurant,
       });
     } else {
-      res.render(err);
+      return res.status(httpStatus.INTERNAL_SERVER_ERROR).json({
+        success: false,
+        error: 'Server Error',
+      });
     }
   });
 });
@@ -76,7 +72,10 @@ app.post('/restaurantChains/edit/:chainId', function (req, res) {
       if (!err) {
         res.redirect(`/restaurantChains/${req.params.chainId}`);
       } else {
-        res.render(err);
+        return res.status(httpStatus.INTERNAL_SERVER_ERROR).json({
+          success: false,
+          error: 'Server Error',
+        });
       }
     },
   );
@@ -87,7 +86,10 @@ app.get('/restaurantChains/delete/:chainId', function (req, res) {
     if (!err) {
       res.redirect('/restaurantChains');
     } else {
-      res.render(err);
+      return res.status(httpStatus.INTERNAL_SERVER_ERROR).json({
+        success: false,
+        error: 'Server Error',
+      });
     }
   });
 });

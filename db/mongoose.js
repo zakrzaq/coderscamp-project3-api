@@ -1,5 +1,5 @@
-import mongoose from "mongoose";
-import dotenvFlow from "dotenv-flow";
+import mongoose from 'mongoose';
+import dotenvFlow from 'dotenv-flow';
 
 dotenvFlow.config();
 
@@ -9,9 +9,9 @@ const connectDB = () => {
       useUnifiedTopology: true,
       useNewUrlParser: true,
     });
-    console.log("mongo database is connected");
+    console.log('mongo database is connected');
   } catch (error) {
-    console.error("mongo database connection error");
+    console.error('mongo database connection error');
   }
 };
 
