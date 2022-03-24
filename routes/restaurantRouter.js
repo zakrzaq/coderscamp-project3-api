@@ -1,27 +1,43 @@
-import express from 'express';
-import { restaurantController } from '../controllers/restaurantController.js';
+import express from "express";
+import { verify } from "./verifyToken.js";
+import { roles } from "./roles.js";
+import { setUser, authRole } from "./rolesAuth.js";
+import { restaurantController } from "../controllers/restaurantController.js";
 import {
   validateRestaurant,
   validateRestaurantId,
-} from '../utils/restaurantValidation.js';
+} from "../utils/restaurantValidation.js";
 
 export const restaurantRouter = express.Router();
 restaurantRouter
-  .get('/', restaurantController.getRestaurants)
-  .post('/', validateRestaurant, restaurantController.addRestaurant)
-  .get('/:id', validateRestaurantId, restaurantController.getRestaurantById)
+  .get("/", restaurantController.getRestaurants)
+  .post(
+    "/",
+    verify,
+    setUser,
+    authRole(roles.ADMIN),
+    validateRestaurant,
+    restaurantController.addRestaurant
+  )
+  .get("/:id", validateRestaurantId, restaurantController.getRestaurantById)
   .delete(
-    '/:id',
+    "/:id",
+    verify,
+    setUser,
+    authRole(roles.ADMIN),
     validateRestaurantId,
-    restaurantController.deleteRestaurantById,
+    restaurantController.deleteRestaurantById
   )
   .put(
-    '/:id',
+    "/:id",
+    verify,
+    setUser,
+    authRole(roles.ADMIN),
     validateRestaurantId,
     validateRestaurant,
-    restaurantController.updateRestaurantById,
+    restaurantController.updateRestaurantById
   )
   .get(
-    '/restaurantChain/:id',
-    restaurantController.getRestaurantsByRestaurantChainId,
+    "/restaurantChain/:id",
+    restaurantController.getRestaurantsByRestaurantChainId
   );
