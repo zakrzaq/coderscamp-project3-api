@@ -5,8 +5,7 @@
 -   [Authors](#authors)
 -   [Acknowledgments](#acknowledgments)
 -   [Overview](#overview)
--   [The project](#the-project)
--   [Our process](#our-process)
+-   [Docs](#docs)
 -   [How to run the project](#how-to-run-the-project)
 
 ## Authors
@@ -41,6 +40,7 @@ For authentication we use JWT (access token with expiration of 60 days with refr
 
 Please check out below docs for all information about restaurant chains API:
 
+-   [HTTP Status Codes](docs/statusCodes.md)
 -   [Auth](docs/auth.md)
 -   [User](docs/user.md)
 -   [RestaurantChains](docs/chains.md)
