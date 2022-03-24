@@ -6,15 +6,20 @@ import {
     loginValidation,
 } from "../utils/userValidation.js";
 import jwt from "jsonwebtoken";
+import { httpStatus } from "../utils/httpStatusCode.js";
 
 const router = express.Router();
 
 router.post("/register", async (req, res) => {
     const { error } = registerValidation(req.body);
-    if (error) return res.status(400).send(error.details[0].message);
+    if (error)
+        return res
+            .status(httpStatus.BAD_REQUEST)
+            .send(error.details[0].message);
 
     const emailExist = await User.findOne({ email: req.body.email });
-    if (emailExist) return res.status(400).send("Email already exists.");
+    if (emailExist)
+        return res.status(httpStatus.BAD_REQUEST).send("Email already exists.");
 
     const salt = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(req.body.password, salt);
@@ -31,7 +36,7 @@ router.post("/register", async (req, res) => {
         const savedUser = await user.save();
         res.send({ user: savedUser._id });
     } catch (err) {
-        res.status(400).send(err);
+        res.status(httpStatus.BAD_REQUEST).send(err);
     }
 });
 
@@ -39,13 +44,22 @@ const refreshTokens = [];
 
 router.post("/login", async (req, res) => {
     const { error } = loginValidation(req.body);
-    if (error) return res.status(400).send(error.details[0].message);
+    if (error)
+        return res
+            .status(httpStatus.BAD_REQUEST)
+            .send(error.details[0].message);
 
     const user = await User.findOne({ email: req.body.email });
-    if (!user) return res.status(400).send("Email or password is wrong");
+    if (!user)
+        return res
+            .status(httpStatus.BAD_REQUEST)
+            .send("Email or password is wrong");
 
     const validPass = await bcrypt.compare(req.body.password, user.password);
-    if (!validPass) return res.status(400).send("Email or password is wrong");
+    if (!validPass)
+        return res
+            .status(httpStatus.BAD_REQUEST)
+            .send("Email or password is wrong");
 
     const accessToken = jwt.sign({ _id: user._id }, process.env.TOKEN_SECRET, {
         expiresIn: "60d",
@@ -62,12 +76,14 @@ router.post("/login", async (req, res) => {
 router.post("/token", (req, res) => {
     const { token } = req.body;
 
-    if (!token) return res.status(401).send("Unauthorized Access");
+    if (!token)
+        return res.status(httpStatus.UNAUTHORIZED).send("Unauthorized Access");
     if (!refreshTokens.includes(token))
-        return res.status(403).send("Forbidden response");
+        return res.status(httpStatus.FORBIDDEN).send("Forbidden response");
 
     jwt.verify(token, refreshTokens, (err, user) => {
-        if (err) return res.status(403).send("Forbidden response");
+        if (err)
+            return res.status(httpStatus.FORBIDDEN).send("Forbidden response");
 
         const accessToken = jwt.sign(
             { _id: user._id },
@@ -88,7 +104,7 @@ router.post("/logout", (req, res) => {
 
     refreshTokens = refreshTokens.filter((t) => t !== token);
 
-    res.status(204).send("Logout successful");
+    res.status(httpStatus.NO_CONTENT).send("Logout successful");
 });
 
 export { router };
