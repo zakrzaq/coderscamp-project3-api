@@ -40,7 +40,7 @@ router.post("/register", async (req, res) => {
     }
 });
 
-const refreshTokens = [];
+let refreshTokens = [];
 
 router.post("/login", async (req, res) => {
     const { error } = loginValidation(req.body);
