@@ -9,18 +9,10 @@ import cors from "cors";
 import { createServer } from "http";
 import { Server } from "socket.io";
 
-const httpServer = createServer();
+const app = express();
+const httpServer = createServer(app);
 const io = new Server(httpServer);
 
-io.on("connection", (socket) => {
-    console.log(socket.id);
-});
-
-const PORT = process.env.SERVER_PORT;
-
-httpServer.listen(80);
-
-const app = express();
 app.use(morgan("dev"));
 
 connectDB();
@@ -32,5 +24,14 @@ app.use("/user", authRoute);
 app.use("/user", userRouter);
 app.use("/restaurant", restaurantRouter);
 app.use("/tables", tableRouter);
+
+httpServer.listen(80);
+
+io.on("connection", (socket) => {
+    console.log("socket is ready for connection");
+    console.log(socket.id);
+});
+
+const PORT = process.env.SERVER_PORT;
 
 app.listen(PORT, () => console.log(`Server is running on: ${PORT}`));
