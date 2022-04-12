@@ -6,11 +6,22 @@ import { tableRouter } from "./routes/tableRouter.js";
 import { restaurantRouter } from "./routes/restaurantRouter.js";
 import morgan from "morgan";
 import cors from "cors";
+import { createServer } from "http";
+import { Server } from "socket.io";
+
+const httpServer = createServer();
+const io = new Server(httpServer);
+
+io.on("connection", (socket) => {
+    console.log(socket.id);
+});
+
+const PORT = process.env.SERVER_PORT;
+
+httpServer.listen(80);
 
 const app = express();
 app.use(morgan("dev"));
-
-const PORT = process.env.SERVER_PORT;
 
 connectDB();
 
