@@ -2,6 +2,7 @@ import mongoose from 'mongoose';
 const { Schema } = mongoose;
 
 const restaurantSchema = new mongoose.Schema({
+  _id: Schema.Types.ObjectId,
   name: {
     type: String,
     required: [true, 'Field name is required'],
@@ -12,7 +13,4 @@ const restaurantSchema = new mongoose.Schema({
   },
 });
 
-export const RestaurantsChain = mongoose.model(
-  'RestaurantsChain',
-  restaurantSchema,
-);
+export const RestaurantsChain = mongoose.model('RestaurantsChain', restaurantSchema);
