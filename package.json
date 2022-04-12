@@ -23,6 +23,7 @@
   },
   "homepage": "https://github.com/zakrzaq/coderscamp_2021_backend#readme",
   "dependencies": {
+    "@joi/date": "^2.1.0",
     "bcryptjs": "^2.4.3",
     "dotenv": "^16.0.0",
     "dotenv-flow": "^3.2.0",
