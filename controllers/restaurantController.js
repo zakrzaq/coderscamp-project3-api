@@ -1,5 +1,29 @@
 import { httpStatus } from "../utils/httpStatusCode.js";
 import { restaurantService } from "../services/restaurantService.js";
+import multer from "multer";
+
+const multerStorage = multer.diskStorage({
+    destination: (req, file, cb) => {
+        cb(null, "public/restaurantImgs");
+    },
+    filename: (req, file, cb) => {
+        const ext = file.mimetype.split("/")[1];
+        cb(null, `restaurant-${Date.now()}.${ext}`);
+    },
+});
+
+// test if file is an img
+const multerFilter = (req, file, cb) => {
+    if (file.mimetype.startsWith("image")) {
+        cb(null, true);
+    } else {
+        cb(new Error("Not an image"), false);
+    }
+};
+
+const upload = multer({ storage: multerStorage, fileFilter: multerFilter });
+
+const uploadBgImg = upload.single("bgImg");
 
 const getRestaurants = async function (req, res) {
     try {
@@ -24,6 +48,7 @@ const getRestaurants = async function (req, res) {
 };
 
 const addRestaurant = async function (req, res) {
+    console.log(req.body);
     try {
         const restaurant = await restaurantService.addRestaurant(req.body);
 
@@ -78,6 +103,7 @@ const deleteRestaurantById = async function (req, res) {
 };
 
 const updateRestaurantById = async function (req, res) {
+    console.log(req.body);
     try {
         const updatedRestaurant = await restaurantService.updateRestaurantById(
             req.params,
@@ -127,4 +153,5 @@ export const restaurantController = {
     deleteRestaurantById,
     updateRestaurantById,
     getRestaurantsByRestaurantChainId,
+    uploadBgImg,
 };
