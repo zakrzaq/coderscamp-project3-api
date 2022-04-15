@@ -1,4 +1,5 @@
 import { Table } from '../models/Table.js';
+import { Restaurant } from '../models/Restaurant.js';
 import mongoose from "mongoose";
 
 const getTables = async (req, res) => {
@@ -14,6 +15,7 @@ const addTable = async (req, res) => {
   const table = new Table({
     id: new mongoose.Types.ObjectId,
     name: req.body.name,
+    restaurantId: req.body.restaurantId,
     numberOfSeats: req.body.numberOfSeats,
     withChild: req.body.withChild,
   });
@@ -29,6 +31,19 @@ const addTable = async (req, res) => {
 const getTable = async (req, res) => {
   try {
     const table = await Table.findById(req.params.id);
+    res.json(table);
+  } catch(error) {
+    res.send(error);
+  }
+}
+
+const getTableById = async (req, res) => {
+  try {
+    const restaurant = await Restaurant.findById(req.params.restaurantId);
+    if(!restaurant) {
+      res.status(404).send('Invalid restaurant id');
+    }
+    const table = await Table.find({ restaurantId: req.params.restaurantId });
     res.json(table);
   } catch(error) {
     res.send(error);
@@ -64,6 +79,7 @@ export const tableController = {
   getTables,
   addTable,
   getTable,
+  getTableById,
   updateTable,
   deleteTable
 }
