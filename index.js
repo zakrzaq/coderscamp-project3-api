@@ -13,8 +13,6 @@ const app = express();
 const server = createServer(app);
 const io = new Server(server);
 
-connectDB();
-
 const PORT = process.env.SERVER_PORT;
 
 app.use(morgan("dev"));
@@ -26,9 +24,16 @@ app.use("/user", userRouter);
 app.use("/restaurant", restaurantRouter);
 app.use("/tables", tableRouter);
 
-io.on("connection", (socket) => {
-    console.log("socket is ready for connection");
-    console.log(socket.id);
+connectDB("", (error, db) => {
+    if (error) {
+        throw new Error("Couldn't connect to databse");
+    }
+    console.log("DB connected...");
+
+    io.on("connection", (socket) => {
+        console.log("socket is ready for connection");
+        console.log(socket.id);
+    });
 });
 
 server.listen(PORT, () => console.log(`Server is running on: ${PORT}`));
