@@ -23,6 +23,7 @@
   },
   "homepage": "https://github.com/zakrzaq/coderscamp_2021_backend#readme",
   "dependencies": {
+    "@socket.io/mongo-adapter": "^0.1.0",
     "bcryptjs": "^2.4.3",
     "cors": "^2.8.5",
     "dotenv": "^16.0.0",
@@ -33,6 +34,7 @@
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^6.2.3",
     "morgan": "^1.10.0",
-    "nodemon": "^2.0.15"
+    "nodemon": "^2.0.15",
+    "socket.io": "^4.4.1"
   }
 }

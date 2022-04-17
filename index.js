@@ -6,14 +6,16 @@ import { tableRouter } from "./routes/tableRouter.js";
 import { restaurantRouter } from "./routes/restaurantRouter.js";
 import morgan from "morgan";
 import cors from "cors";
+import { createServer } from "http";
+import { Server } from "socket.io";
 
 const app = express();
-app.use(morgan("dev"));
+const server = createServer(app);
+const io = new Server(server);
 
 const PORT = process.env.SERVER_PORT;
 
-connectDB();
-
+app.use(morgan("dev"));
 app.use(cors({ origin: true, credentials: true }));
 app.use(express.json());
 
@@ -22,4 +24,18 @@ app.use("/user", userRouter);
 app.use("/restaurant", restaurantRouter);
 app.use("/tables", tableRouter);
 
-app.listen(PORT, () => console.log(`Server is running on: ${PORT}`));
+connectDB("", (error, db) => {
+    if (error) {
+        throw new Error("Couldn't connect to databse");
+    }
+    console.log("DB connected...");
+
+    io.on("connection", (socket) => {
+        console.log("socket is ready for connection");
+        console.log(socket.id);
+    });
+});
+
+server.listen(PORT, () => console.log(`Server is running on: ${PORT}`));
+
+//app.listen(PORT, () => console.log(`Server is running on: ${PORT}`));
