@@ -3,17 +3,18 @@ const { Schema } = mongoose;
 
 const restaurantBgImgSchema = new mongoose.Schema({
     _id: Schema.Types.ObjectId,
-    /*backgroundImage: {
-        data: Buffer,
-        contentType: String,
+    backgroundImage: {
+        type: String,
     },
+
+    /*
     restaurant: {
         type: Schema.Types.ObjectId,
         ref: "Restaurant",
     },*/
 });
 
-export const restaurantBgImg = mongoose.model(
+export const RestaurantBgImg = mongoose.model(
     "RestaurantBgImg",
     restaurantBgImgSchema
 );

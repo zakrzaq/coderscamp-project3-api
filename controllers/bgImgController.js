@@ -1,11 +1,12 @@
 import { httpStatus } from "../utils/httpStatusCode.js";
-import { restaurantBgImg } from "../models/bgImgModel.js";
+import { RestaurantBgImg } from "../models/bgImgModel.js";
+import mongoose from "mongoose";
 
 const getBgImgs = async (req, res) => {
     try {
-        const bgImgs = await restaurantBgImg.find(req.query);
+        const bgImgs = await RestaurantBgImg.find(req.query);
 
-        if (bgImg.length === 0) {
+        if (bgImgs.length === 0) {
             return res.status(httpStatus.NO_CONTENT).json({
                 message: "No background image found",
             });
@@ -23,18 +24,18 @@ const getBgImgs = async (req, res) => {
     }
 };
 
-const addBgImg = async function (req, res) {
+const addBgImg = async (req, res) => {
+    const bgImg = new RestaurantBgImg({
+        _id: new mongoose.Types.ObjectId(),
+        backgroundImage: req.file.filename,
+    });
     try {
-        console.log(req.body);
-        /*const bgImg = new restaurantBgImg({
-            _id: new mongoose.Types.ObjectId(),
-        });
+        const createdBgImg = await RestaurantBgImg.create(bgImg);
 
-        const createdBgImg = await bgImg.save();
         return res.status(httpStatus.CREATED).json({
             success: true,
             data: createdBgImg,
-        });*/
+        });
     } catch (err) {
         return res.status(httpStatus.INTERNAL_SERVER_ERROR).json({
             success: false,
