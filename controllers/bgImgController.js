@@ -44,17 +44,17 @@ const addBgImg = async (req, res) => {
     }
 };
 
-/*const getUserById = async (req, res) => {
+const getBgImgById = async (req, res) => {
     try {
-        const user = await User.findById(req.params.id);
-        if (!user) {
+        const bgImg = await RestaurantBgImg.findById(req.params.id);
+        if (!bgImg) {
             return res.status(httpStatus.NO_CONTENT).json({
-                message: "user not found",
+                message: "background image not found",
             });
         }
         return res.status(httpStatus.OK).json({
             success: true,
-            data: { user },
+            data: { bgImg },
         });
     } catch (err) {
         return res.status(httpStatus.INTERNAL_SERVER_ERROR).json({
@@ -64,22 +64,27 @@ const addBgImg = async (req, res) => {
     }
 };
 
-const updateUserById = async (req, res) => {
+const updateBgImgById = async (req, res) => {
+    if (req.file) req.body.backgroundImage = req.file.filename;
     try {
-        const user = await User.findByIdAndUpdate(req.params.id, req.body, {
-            new: true,
-            runValidators: true,
-        });
+        const bgImg = await RestaurantBgImg.findByIdAndUpdate(
+            req.params.id,
+            req.body,
+            {
+                new: true,
+                runValidators: true,
+            }
+        );
 
-        if (!user) {
+        if (!bgImg) {
             return res.status(httpStatus.NO_CONTENT).json({
-                message: "user not found",
+                message: "background image not found",
             });
         }
 
         return res.status(httpStatus.OK).json({
             success: true,
-            data: { user },
+            data: { bgImg },
         });
     } catch (error) {
         return res.status(httpStatus.INTERNAL_SERVER_ERROR).json({
@@ -89,13 +94,13 @@ const updateUserById = async (req, res) => {
     }
 };
 
-const deleteUserById = async (req, res) => {
+const deleteBgImgById = async (req, res) => {
     try {
-        const user = await User.findByIdAndDelete(req.params.id);
+        const bgImg = await RestaurantBgImg.findByIdAndDelete(req.params.id);
 
-        if (!user) {
+        if (!bgImg) {
             return res.status(httpStatus.NO_CONTENT).json({
-                message: "user not found",
+                message: "background image not found",
             });
         }
 
@@ -109,9 +114,12 @@ const deleteUserById = async (req, res) => {
             error: "Server error",
         });
     }
-};*/
+};
 
 export const restaurantBgImgController = {
     getBgImgs,
     addBgImg,
+    getBgImgById,
+    updateBgImgById,
+    deleteBgImgById,
 };

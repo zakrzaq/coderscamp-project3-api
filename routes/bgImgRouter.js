@@ -6,4 +6,7 @@ export const restaurantBgImgRouter = express.Router();
 
 restaurantBgImgRouter
     .get("/", restaurantBgImgController.getBgImgs)
-    .post("/", uploadBgImg, restaurantBgImgController.addBgImg);
+    .post("/", uploadBgImg, restaurantBgImgController.addBgImg)
+    .get("/:id", restaurantBgImgController.getBgImgById)
+    .put("/:id", uploadBgImg, restaurantBgImgController.updateBgImgById)
+    .delete("/:id", restaurantBgImgController.deleteBgImgById);
