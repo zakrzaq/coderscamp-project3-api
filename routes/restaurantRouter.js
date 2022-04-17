@@ -16,7 +16,6 @@ restaurantRouter
         verify,
         setUser,
         authRole(roles.ADMIN),
-        //restaurantController.uploadBgImg,
         validateRestaurant,
         restaurantController.addRestaurant
     )
@@ -36,7 +35,6 @@ restaurantRouter
         authRole(roles.ADMIN),
         validateRestaurantId,
         validateRestaurant,
-        restaurantController.uploadBgImg,
         restaurantController.updateRestaurantById
     )
     .get(
