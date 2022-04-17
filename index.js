@@ -4,6 +4,7 @@ import { router as authRoute } from "./routes/auth.js";
 import { userRouter } from "./routes/userRouter.js";
 import { tableRouter } from "./routes/tableRouter.js";
 import { restaurantRouter } from "./routes/restaurantRouter.js";
+import { restaurantBgImgRouter } from "./routes/bgImgRouter.js";
 import morgan from "morgan";
 import cors from "cors";
 
@@ -20,6 +21,7 @@ app.use(express.json());
 app.use("/user", authRoute);
 app.use("/user", userRouter);
 app.use("/restaurant", restaurantRouter);
+app.use("/bgImg", restaurantBgImgRouter);
 app.use("/tables", tableRouter);
 
 app.listen(PORT, () => console.log(`Server is running on: ${PORT}`));
