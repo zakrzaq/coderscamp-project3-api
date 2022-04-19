@@ -1,15 +1,9 @@
 import { httpStatus } from '../utils/httpStatusCode.js';
 import { restaurantsChainService } from '../services/restaurantsChainService.js';
 
-const getChains = async function (req, res) {
+const getAllChains = async function (req, res) {
   try {
-    const chain = await restaurantsChainService.getChains(req.query);
-
-    if (chain.length === 0) {
-      return res.status(httpStatus.NO_CONTENT).json({
-        message: 'No chain found',
-      });
-    }
+    const chain = await restaurantsChainService.getAllChains(req.query);
 
     return res.status(httpStatus.OK).json({
       success: true,
@@ -43,7 +37,7 @@ const getChainById = async function (req, res) {
   try {
     const chain = await restaurantsChainService.getChainById(req.params);
     if (!chain) {
-      return res.status(httpStatus.NO_CONTENT).json({
+      return res.status(httpStatus.NOT_FOUND).json({
         message: 'ID not found.',
       });
     }
@@ -63,7 +57,7 @@ const deleteChainById = async function (req, res) {
   try {
     await restaurantsChainService.deleteChainById(req.params);
 
-    return res.status(httpStatus.NO_CONTENT).json({
+    return res.status(httpStatus.NOT_FOUND).json({
       success: true,
       data: {},
     });
@@ -94,7 +88,7 @@ const updateChainById = async function (req, res) {
 };
 
 export const restaurantsChainController = {
-  getChains,
+  getAllChains,
   addChain,
   getChainById,
   deleteChainById,

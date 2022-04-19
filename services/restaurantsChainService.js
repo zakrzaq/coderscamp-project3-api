@@ -1,7 +1,7 @@
 import { RestaurantsChain } from '../models/RestaurantsChain.js';
 import mongoose from 'mongoose';
 
-const getChains = async function (reqQuery) {
+const getAllChains = async function (reqQuery) {
   try {
     const queryObj = { ...reqQuery };
     let query = RestaurantsChain.find(queryObj);
@@ -61,7 +61,7 @@ const updateChainById = async function (params, reqBody) {
 };
 
 export const restaurantsChainService = {
-  getChains,
+  getAllChains,
   addChain,
   getChainById,
   deleteChainById,
