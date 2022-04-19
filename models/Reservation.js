@@ -3,25 +3,29 @@ const { Schema } = mongoose;
 
 const reservationSchema = new mongoose.Schema({
   _id: Schema.Types.ObjectId,
-  date: {
-    type: String,
-    required: [true, 'Field date is required'],
+  booking: {
+    date: {
+      type: String,
+      required: [true, 'Reservation date is required'],
+    },
+    hour: {
+      type: String,
+      required: [true, 'Reservation hour is required'],
+    },
   },
-  hour: {
-    type: String,
-    required: [true, 'Field hour is required'],
-  },
-  customerName: {
-    type: String,
-    required: true,
-  },
-  customerLastName: {
-    type: String,
-    required: [true, 'Field customer last is required'],
-  },
-  customerPhone: {
-    type: String,
-    required: [true, 'Field customer telephone number is required'],
+  customer: {
+    name: {
+      type: String,
+      required: [true, 'Customer name is required'],
+    },
+    lastName: {
+      type: String,
+      required: [true, 'Customer last name is required'],
+    },
+    phone: {
+      type: String,
+      required: [true, 'Customer telephone number is required'],
+    },
   },
 });
 

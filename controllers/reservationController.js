@@ -34,7 +34,7 @@ const addReservation = async function (req, res) {
   } catch (err) {
     return res.status(httpStatus.INTERNAL_SERVER_ERROR).json({
       success: false,
-      error: 'Server Error 😒',
+      error: 'Server Error',
     });
   }
 };

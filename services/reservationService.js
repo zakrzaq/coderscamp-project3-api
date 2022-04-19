@@ -15,11 +15,8 @@ const getReservations = async function (reqQuery) {
 const addReservation = async function (reqBody, res) {
   const reservationToAdd = new Reservation({
     _id: new mongoose.Types.ObjectId(),
-    date: reqBody.date,
-    hour: reqBody.hour,
-    customerName: reqBody.customerName,
-    customerLastName: reqBody.customerLastName,
-    customerPhone: reqBody.customerPhone,
+    booking: reqBody.booking,
+    customer: reqBody.customer,
   });
   try {
     const reservation = await Reservation.create(reservationToAdd);
@@ -49,11 +46,8 @@ const deleteReservationById = async function (params) {
 
 const updateReservationById = async function (params, reqBody) {
   const reservationToUpdate = {
-    date: reqBody.date,
-    hour: reqBody.hour,
-    customerName: reqBody.customerName,
-    customerLastName: reqBody.customerLastName,
-    customerPhone: reqBody.customerPhone,
+    booking: reqBody.booking,
+    customer: reqBody.customer,
   };
   try {
     const updatedReservation = await Reservation.findByIdAndUpdate(
