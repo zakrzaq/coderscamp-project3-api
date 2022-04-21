@@ -46,7 +46,6 @@ const deleteReservationById = async function (params) {
 
 const updateReservationById = async function (params, reqBody) {
   const reservationToUpdate = {
-    booking: reqBody.booking,
     customer: reqBody.customer,
   };
   try {
