@@ -11,6 +11,10 @@ const restaurantSchema = new mongoose.Schema({
     type: String,
     required: [true, 'Field manager is required'],
   },
+  restaurants: {
+    type: Schema.Types.ObjectId,
+    ref: "Restaurant",
+  },
 });
 
 export const RestaurantsChain = mongoose.model('RestaurantsChain', restaurantSchema);

@@ -4,7 +4,7 @@ import { validateRestaurantChain, validateRestaurantChainId } from '../utils/res
 
 export const restaurantChainsRouter = express.Router();
 restaurantChainsRouter
-  .get('/', restaurantsChainController.getChains)
+  .get('/', restaurantsChainController.getAllChains)
   .post(
     '/',
     validateRestaurantChain,
