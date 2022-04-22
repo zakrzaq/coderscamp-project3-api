@@ -19,7 +19,7 @@ const getAllChains = async function (req, res) {
 
 const addChain = async function (req, res) {
   try {
-    const chain = await restaurantsChainService.addChain(req.body);
+    const chain = await restaurantsChainService.addChain(req);
 
     return res.status(httpStatus.CREATED).json({
       success: true,
@@ -71,10 +71,7 @@ const deleteChainById = async function (req, res) {
 
 const updateChainById = async function (req, res) {
   try {
-    const updatedChain = await restaurantsChainService.updateChainById(
-      req.params,
-      req.body,
-    );
+    const updatedChain = await restaurantsChainService.updateChainById(req);
     return res.status(httpStatus.OK).json({
       success: true,
       data: { updatedChain },
