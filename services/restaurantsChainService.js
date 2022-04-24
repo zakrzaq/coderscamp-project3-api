@@ -12,11 +12,12 @@ const getAllChains = async function (reqQuery) {
   }
 };
 
-const addChain = async function (reqBody, res) {
+const addChain = async function (req, res) {
   const chainToAdd = new RestaurantsChain({
     _id: new mongoose.Types.ObjectId(),
-    name: reqBody.name,
-    manager: reqBody.manager,
+    name: req.body.name,
+    manager: req.body.manager,
+    image: req.file.filename,
   });
   try {
     const chain = await RestaurantsChain.create(chainToAdd);
@@ -44,14 +45,17 @@ const deleteChainById = async function (params) {
   }
 };
 
-const updateChainById = async function (params, reqBody) {
+const updateChainById = async function (req) {
+  if (req.file) req.body.logoImage = req.file.filename;
+
   const chainToUpdate = {
-    name: reqBody.name,
-    manager: reqBody.manager,
+    name: req.body.name,
+    manager: req.body.manager,
+    image: req.body.logoImage,
   };
   try {
     const updatedChain = await RestaurantsChain.findByIdAndUpdate(
-      params.id,
+      req.params.id,
       chainToUpdate,
     );
     return updatedChain.save();

@@ -11,7 +11,7 @@ import morgan from "morgan";
 import cors from "cors";
 
 const app = express();
-app.use(morgan("dev"));
+app.use(morgan('dev'));
 
 const PORT = process.env.SERVER_PORT;
 
@@ -26,6 +26,5 @@ app.use("/restaurant", restaurantRouter);
 app.use("/tables", tableRouter);
 app.use("/restaurantsChains", restaurantChainsRouter);
 app.use("/reservations", reservationRouter);
-
 
 app.listen(PORT, () => console.log(`Server is running on: ${PORT}`));
