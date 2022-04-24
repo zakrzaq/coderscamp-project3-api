@@ -43,7 +43,7 @@ Please check out below docs for all information about restaurant chains API:
 -   [HTTP Status Codes](docs/statusCodes.md)
 -   [Auth](docs/auth.md)
 -   [User](docs/user.md)
--   [RestaurantChains](docs/chains.md)
+-   [RestaurantChains](docs/restaurantChains.md)
 -   [Restaurants](docs/restaurant.md)
 -   [Tables](docs/tables.md)
 
