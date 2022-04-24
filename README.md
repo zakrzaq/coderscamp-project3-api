@@ -46,6 +46,7 @@ Please check out below docs for all information about restaurant chains API:
 -   [RestaurantChains](docs/restaurantChains.md)
 -   [Restaurants](docs/restaurant.md)
 -   [Tables](docs/tables.md)
+-   [Reservations](docs/reservations.md)
 
 ### How to run the project
 
